@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  username String    @db.VarChar(100)
+  password String    @db.VarChar(100)
+  role     String?   @db.VarChar(100)
+  isActive Boolean @db.TinyInt @default(true)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  profiles Profile[]
+  cafes      Cafe[]
+  
+  @@map("users")
+}
+
+model Profile {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  email      String?   @db.VarChar(200)
+  phone      String?   @db.VarChar(20)
+  id_user    Int       @db.Int
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  user       User      @relation(fields: [id_user], references: [id])
+
+  @@map("profiles")
+}
+
+model Cafe {
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(255)
+  longitude Float  @db.Float
+  latitude  Float  @db.Float
+  alamat    String? @db.LongText
+  foto      String? @db.VarChar(100)
+  id_user   Int @db.Int
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  user      User    @relation(fields: [id_user], references: [id])
+  menus Menu[]
+  order Order[]
+
+  @@map("cafes")
+}
+
+model Menu {
+  id  Int @id @default(autoincrement())
+  id_cafe Int @db.Int
+  menu String @db.VarChar(100)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  cafe Cafe @relation(fields: [id_cafe], references: [id])
+  product Product[]
+
+  @@map("menus")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  id_menu Int @db.Int
+  productName String @db.VarChar(255)
+  foto      String? @db.VarChar(100)
+  newProduct Boolean @db.TinyInt @default(false)
+  hardSelling Boolean @db.TinyInt @default(false)
+  mainProduct Boolean @db.TinyInt @default(false)
+  totalLike Float @db.Float
+  totalOrder Float @db.Float
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  menu Menu @relation(fields: [id_menu], references: [id])
+  price Price[]
+  historyLike HistoryLike[]
+
+  @@map("products")
+}
+
+model Type {
+  id Int @id @default(autoincrement())
+  type String @db.VarChar(255)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  price Price[]
+
+  @@map("types")
+}
+
+model Price {
+  id Int @id @default(autoincrement())
+  id_prduct Int @db.Int
+  id_type Int @db.Int
+  price     Decimal @db.Decimal
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  type Type @relation(fields: [id_type] ,references: [id])
+  product Product @relation(fields: [id_prduct] ,references: [id])
+  detailOrder DetailOrder[]
+  discount Discount[]
+
+  @@map("prices")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  noOrder String @db.VarChar(100)
+  id_cafe Int @db.Int
+  meja Float @db.Float
+  email String @db.VarChar(255)
+  status  Status
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  cafe Cafe @relation(fields: [id_cafe], references: [id])
+  detailOrder DetailOrder[]
+  payment Payment[]
+
+  @@map("orders")
+}
+
+enum Status {
+  accepted
+  cooking
+  toSend
+  completed
+  canceled
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+  id_order Int @db.Int
+  total_amount Float @db.Float
+  paymentMethod String @db.VarChar(100)
+  paymentStatus String @db.VarChar(100)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  order Order @relation(fields: [id_order],references: [id])
+
+  @@map("payments")
+}
+
+model DetailOrder {
+  id Int @id @default(autoincrement())
+  id_order Int @db.Int
+  id_price Int @db.Int
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  order Order @relation(fields: [id_order],references: [id])
+  price Price @relation(fields: [id_price],references: [id])
+
+  @@map("detailOrders")
+}
+
+model Discount {
+  id Int @id @default(autoincrement())
+  id_price Int @db.Int
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  price Price @relation(fields: [id_price],references: [id])
+
+  @@map("discounts")
+}
+
+model HistoryApp {
+  id Int @id @default(autoincrement())
+  action String @db.VarChar(100)
+  id_user String @db.VarChar(100)
+  id_cafe String @db.VarChar(100)
+  desc String? @db.VarChar(255)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+
+  @@map("historyApps")
+}
+
+model HistoryLike {
+  id Int @id @default(autoincrement())
+  email String @db.VarChar(100)
+  id_product Int @db.Int
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
+  product Product @relation(fields: [id_product],references: [id])
+
+  @@map("historyLikes")
+}
+
