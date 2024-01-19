@@ -30,6 +30,8 @@ model Profile {
   email      String?   @db.VarChar(200)
   phone      String?   @db.VarChar(20)
   id_user    Int       @db.Int
+  alamat     String? @db.LongText
+  foto       String? @db.VarChar(255)
   created_at DateTime  @default(now()) @db.DateTime(6)
   updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
   user       User      @relation(fields: [id_user], references: [id])

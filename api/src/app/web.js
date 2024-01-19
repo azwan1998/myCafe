@@ -7,6 +7,7 @@ import { config as dotenvConfig } from "dotenv";
 export const web = express();
 web.use(express.json());
 
+web.use(express.static('public'));
 web.use(publicRouter);
 web.use(userRouter);
 dotenvConfig();

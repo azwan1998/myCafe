@@ -1,10 +1,11 @@
 POST http://localhost:3000/api/users
 Content-Type: application/json
 Accept: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW4iLCJpYXQiOjE3MDUyNTA2NzMsImV4cCI6MTcwNTMzNzA3M30.Q30d14UyblCGMZ5SOgPkqRYcnjoyXDOJNrOHk2hVJ3o
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW5uIiwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3MDU0OTk4MzAsImV4cCI6MTcwNTU4NjIzMH0.Y3YQJ2Epdn993-_jg6FCcHZaXbcGca5rVobo_96HyXI
+
 
 {
-  "username" : "tt",
+  "username" : "ttsajfbajs",
   "role" : "superadmin"
 }
 
@@ -14,24 +15,24 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "username" : "azwan",
-  "password" : "12345678"
+  "username" : "azwann",
+  "password" : "123456789"
 }
 
 ################################
 PATCH  http://localhost:3000/api/users/resetPassword/5
 Content-Type: application/json
 Accept: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW4iLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTcwNTI1NDU0MCwiZXhwIjoxNzA1MzQwOTQwfQ.MXIrzgsxZCiTSgJKNUmwwIW-onba7FkMq9zgH2p6d4c
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW5uIiwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3MDU0OTk4MzAsImV4cCI6MTcwNTU4NjIzMH0.Y3YQJ2Epdn993-_jg6FCcHZaXbcGca5rVobo_96HyXI
 
 ################################
 PATCH  http://localhost:3000/api/users/isActive/5
 Content-Type: application/json
 Accept: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW4iLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTcwNTI1NDU0MCwiZXhwIjoxNzA1MzQwOTQwfQ.MXIrzgsxZCiTSgJKNUmwwIW-onba7FkMq9zgH2p6d4c
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW5uIiwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3MDU0OTk4MzAsImV4cCI6MTcwNTU4NjIzMH0.Y3YQJ2Epdn993-_jg6FCcHZaXbcGca5rVobo_96HyXI
 
 {
-  "isActive": false
+  "isActive": true
 }
 
 ################################
@@ -49,4 +50,16 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1l
 {
   "username" : "azwann",
   "password" : "123456789"
+}
+
+################################
+POST  http://localhost:4000/api/profiles
+Content-Type: application/json
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYXp3YW5uIiwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3MDU0NzY0MDMsImV4cCI6MTcwNTU2MjgwM30.ZCw4pjPHwHiY-y7cAzAnqr5qbtc0_kAEvIdrlSAMWPQ
+
+{
+  "name" : "azwan imut betol betol",
+  "email" : "azwan@gmail.com",
+  "phone" : "123456789"
 }

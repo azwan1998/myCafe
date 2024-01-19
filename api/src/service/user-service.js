@@ -4,7 +4,6 @@ import { prismaClient } from "../app/database.js";
 import { ResponseError } from "../error/response-error.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { request } from "express";
 
 const register = async (request) => {
     const user = validate(registerUserValidation, request);

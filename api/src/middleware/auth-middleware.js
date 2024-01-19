@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken";
 import { ResponseError } from "../error/response-error.js";
 
 const authenticateToken = (req, res, next) => {
+
+  if (req.url.startsWith("/public/uploads/")) {
+    return next();
+  }
+  
   const token = req.headers["authorization"];
 
   if (!token) {
