@@ -6,16 +6,10 @@ import multer from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs/promises";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
+    cb(null, "public/uploads/profiles");
   },
   filename: function (req, file, cb) {
     const uniqueFileName = `${uuidv4()}${path.extname(file.originalname)}`;
@@ -23,9 +17,8 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const uploadProfileFoto = multer({ storage: storage });
 
-// service/profile-service.js
 const createOrUpdate = async (request) => {
   try {
     const profileData = validate(addProfileValidaton, request);
@@ -79,7 +72,7 @@ const createOrUpdate = async (request) => {
         });
 
         if (checkProfile.foto) {
-          const oldfotoPath = path.join(process.cwd(), "public/uploads/", checkProfile.foto);
+          const oldfotoPath = path.join(process.cwd(), "public/uploads/profiles", checkProfile.foto);
 
           await fs.unlink(oldfotoPath);
         }
@@ -149,7 +142,7 @@ const showProfile = async (request) => {
   });
 
   if (result && result.foto) {
-    result.foto = `${process.env.BASE_URL}/uploads/${result.foto}`;
+    result.foto = `${process.env.BASE_URL}/uploads/profiles/${result.foto}`;
   }
   
   return result;
@@ -157,7 +150,7 @@ const showProfile = async (request) => {
 };
 
 
-export { upload };
+export { uploadProfileFoto };
 export default {
   createOrUpdate,
   showProfile,

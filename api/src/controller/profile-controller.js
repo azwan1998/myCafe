@@ -1,13 +1,13 @@
 // profile-controller.js
 import profileService from '../service/profile-service.js';
-import { upload } from '../service/profile-service.js';
+import { uploadProfileFoto } from '../service/profile-service.js';
 import { ResponseError } from '../error/response-error.js';
 
 const addOrUpdate = async (req, res, next) => {
   try {
     const userId = req.user.userId;
     
-    upload.single('foto')(req, res, async (err) => {
+    uploadProfileFoto.single('foto')(req, res, async (err) => {
       if (err) {
         return next(new ResponseError(400, err.message));
       }
