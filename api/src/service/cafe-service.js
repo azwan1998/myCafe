@@ -104,8 +104,6 @@ const showCafe = async (request) => {
 
   const filters = [];
 
-  console.log(userData);
-
   if (userData.role === "superadmin") {
     if (request.name) {
       filters.push({

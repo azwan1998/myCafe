@@ -3,6 +3,7 @@ import userController from "../controller/user-controller.js";
 import {authenticateToken,checkUserRole} from "../middleware/auth-middleware.js";
 import profileController from "../controller/profile-controller.js";
 import cafeController from "../controller/cafe-controller.js";
+import menuController from "../controller/menu-controller.js";
 
 const userRouter = new express.Router();
 userRouter.use(authenticateToken);
@@ -23,6 +24,11 @@ userRouter.post('/api/cafes/', checkUserRole(["superadmin","kasir","admin"]),caf
 userRouter.patch('/api/cafes/update/:id', checkUserRole(["superadmin","kasir","admin"]),cafeController.updateCafe);
 userRouter.get('/api/cafes/', checkUserRole(["superadmin","supervisior"]),cafeController.showCafe);
 userRouter.delete('/api/cafes/:id', checkUserRole(["superadmin","supervisior"]),cafeController.deleteCafe);
+
+//MENU API
+userRouter.post('/api/menu/', checkUserRole(["superadmin","admin"]),menuController.addMenu);
+userRouter.patch('/api/menu/update/:id', checkUserRole(["superadmin","admin"]),menuController.updateMenu);
+userRouter.delete('/api/menu/delete/:id', checkUserRole(["superadmin","admin"]),menuController.deleteMenu);
 
 
 export {
