@@ -27,7 +27,7 @@ const getProductValidaton = Joi.object({
     productName: Joi.string().max(100).optional(),
     newProduct: Joi.boolean().optional(),
     hardSelling: Joi.boolean().optional(),
-    mainProduct: Joi.string().optional(),
+    mainProduct: Joi.boolean().optional(),
     page: Joi.number().min(1).positive().default(1),
     size: Joi.number().min(1).positive().max(100).default(10),
 });

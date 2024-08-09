@@ -36,6 +36,7 @@ userRouter.delete('/api/menu/delete/:id', checkUserRole(["superadmin","admin"]),
 userRouter.post('/api/products/', checkUserRole(["superadmin","admin"]),productController.addProduct);
 userRouter.patch('/api/products/update/:id', checkUserRole(["superadmin","admin"]),productController.updateProduct);
 userRouter.delete('/api/products/delete/:id', checkUserRole(["superadmin","admin"]),productController.deleteProduct);
+userRouter.get('/api/products/', checkUserRole(["superadmin","admin"]),productController.getProduct);
 
 
 export {

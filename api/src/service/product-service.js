@@ -4,6 +4,7 @@ import { ResponseError } from "../error/response-error.js";
 import {
   addProductValidaton,
   getIdProductValidaton,
+  getProductValidaton,
   likeProductValidaton,
   updateProductValidaton,
 } from "../validation/product-validation.js";
@@ -194,10 +195,121 @@ const likeProduct = async (request) => {
   }
 };
 
+const getProduct = async (request) => {
+  const productData = validate(getProductValidaton, request);
+
+  console.log(productData);
+  const skip = (productData.page - 1) * productData.size;
+
+  const filters = [];
+
+  filters.push({
+    menu: {
+      is: {
+        id_cafe: productData.id_cafe, // Ubah ke id_cafe sesuai kebutuhan
+      },
+    },
+  });
+
+  if (request.id_menu) {
+    filters.push({
+      id_menu: {
+        equals: parseInt(request.id_menu),
+      },
+    });
+  }
+
+  if (request.productName) {
+    filters.push({
+      productName: {
+        contains: request.productName,
+      },
+    });
+  }
+
+  if (request.newProduct) {
+    filters.push({
+      newProduct: {
+        equals: request.newProduct === 'true' ? true : false,
+      },
+    });
+  }
+
+  if (request.hardSelling) {
+    filters.push({
+      hardSelling: {
+        equals: request.hardSelling === 'true' ? true : false,
+      },
+    });
+  }
+
+  if (request.mainProduct) {
+    filters.push({
+      mainProduct: {
+        equals: request.mainProduct === 'true' ? true : false,
+      },
+    });
+  }
+
+  const products = await prismaClient.product.findMany({
+    where: {
+      AND: filters,
+    },
+    take: productData.size,
+    skip: skip,
+    select: {
+      id: true,
+      id_menu: true,
+      productName: true,
+      foto: true,
+      newProduct: true,
+      hardSelling: true,
+      mainProduct: true,
+      totalLike: true,
+      totalOrder: true,
+      created_at: true,
+      updated_at: true,
+      menu: {
+        select: {
+          id: true,
+          menu: true,
+        },
+      },
+    },
+  });
+
+  products.forEach((product) => {
+    if (product.foto) {
+      product.foto = `${process.env.BASE_URL}/uploads/products/${product.foto}`;
+    }
+  });
+
+  const totalItems = await prismaClient.product.count({
+    where: {
+      AND: filters,
+    },
+  });
+
+  return {
+    data: products,
+    paging: {
+      page: productData.page,
+      total_item: totalItems,
+      total_page: Math.ceil(totalItems / productData.size),
+    },
+  };
+};
+
+const getProductPublic = async (request) => {
+  
+}
+
 export { uploadProductFoto };
 export default {
   addProduct,
   updateProduct,
   deleteProduct,
   likeProduct,
+  getProduct,
+  getProductPublic,
 };

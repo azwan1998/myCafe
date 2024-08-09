@@ -95,9 +95,29 @@ const likeProduct = async (req, res, next) => {
   }
 };
 
+const getProduct = async (req, res, next) => {
+  try {
+    const request = {
+      id_cafe: parseInt(req.query.id_cafe),
+      id_menu: req.query.id_menu,
+      newProduct: req.query.newProduct,
+      hardSelling: req.query.hardSelling,
+      mainProduct: req.query.mainProduct,
+      productName: req.query.productName,
+    };
+
+    const result  = await productService.getProduct(request);
+
+    res.status(200).json(result);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   addProduct,
   updateProduct,
   deleteProduct,
   likeProduct,
+  getProduct,
 };
