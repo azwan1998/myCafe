@@ -18,7 +18,7 @@ const addMenu = async (request) => {
   });
 
   if (checkMenu !== 0) {
-    throw new ResponseError(400, "Menu Already exist at you cafe");
+    throw new ResponseError(400, "Menu Already exist at your cafe");
   }
 
   return prismaClient.menu.create({
@@ -67,6 +67,14 @@ const showMenu = async (request) => {
     filters.push({
       menu: {
         contains: request.menu,
+      },
+    });
+  }
+
+  if (request.id_cafe) {
+    filters.push({
+      id_cafe: {
+        equals: request.id_cafe,
       },
     });
   }

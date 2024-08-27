@@ -198,7 +198,6 @@ const likeProduct = async (request) => {
 const getProduct = async (request) => {
   const productData = validate(getProductValidaton, request);
 
-  console.log(productData);
   const skip = (productData.page - 1) * productData.size;
 
   const filters = [];

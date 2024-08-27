@@ -24,7 +24,7 @@ userRouter.get('/api/profiles/', checkUserRole(["superadmin","kasir","admin"]),p
 userRouter.post('/api/cafes/', checkUserRole(["superadmin","kasir","admin"]),cafeController.addCafe);
 userRouter.patch('/api/cafes/update/:id', checkUserRole(["superadmin","kasir","admin"]),cafeController.updateCafe);
 userRouter.get('/api/cafes/', checkUserRole(["superadmin","supervisior"]),cafeController.showCafe);
-userRouter.delete('/api/cafes/:id', checkUserRole(["superadmin","supervisior"]),cafeController.deleteCafe);
+userRouter.delete('/api/cafes/delete/:id', checkUserRole(["superadmin","supervisior"]),cafeController.deleteCafe);
 
 //MENU API
 userRouter.post('/api/menu/', checkUserRole(["superadmin","admin"]),menuController.addMenu);

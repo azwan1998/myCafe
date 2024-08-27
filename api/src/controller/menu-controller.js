@@ -34,7 +34,7 @@ const updateMenu = async (req, res, next) => {
 const showMenu = async (req, res, next) => {
   try {
     const request = {
-      id_cafe: req.query.id_cafe,
+      id_cafe: parseInt(req.query.id_cafe),
       menu: req.query.menu,
     };
 
