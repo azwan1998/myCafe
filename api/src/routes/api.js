@@ -5,6 +5,8 @@ import profileController from "../controller/profile-controller.js";
 import cafeController from "../controller/cafe-controller.js";
 import menuController from "../controller/menu-controller.js";
 import productController from "../controller/product-controller.js";
+import typeController from "../controller/type-controller.js";
+import priceController from "../controller/price-controller.js";
 
 const userRouter = new express.Router();
 userRouter.use(authenticateToken);
@@ -37,6 +39,13 @@ userRouter.post('/api/products/', checkUserRole(["superadmin","admin"]),productC
 userRouter.patch('/api/products/update/:id', checkUserRole(["superadmin","admin"]),productController.updateProduct);
 userRouter.delete('/api/products/delete/:id', checkUserRole(["superadmin","admin"]),productController.deleteProduct);
 userRouter.get('/api/products/', checkUserRole(["superadmin","admin"]),productController.getProduct);
+
+//TYPE API
+userRouter.post('/api/types/', checkUserRole(["superadmin","admin"]),typeController.addType);
+userRouter.patch('/api/types/update/:id', checkUserRole(["superadmin","admin"]),typeController.updateType);
+
+//PRICE API
+userRouter.post('/api/price/', checkUserRole(["superadmin","admin"]),priceController.addPrice);
 
 
 export {

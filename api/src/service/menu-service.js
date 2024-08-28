@@ -88,8 +88,26 @@ const showMenu = async (request) => {
     select: {
       id: true,
       menu: true,
-      created_at: true,
-      updated_at: true,
+      product: {
+        select: {
+          id: true,
+          productName: true,
+          foto: true,
+          totalLike: true,
+          hardSelling: true,
+          price: {
+            select: {
+              id: true,
+              price: true,
+              type: {
+                select: {
+                  type: true
+                },
+              },
+            }
+          },
+        },
+      },
     },
   });
 
