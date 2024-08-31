@@ -51,7 +51,7 @@ model Cafe {
   updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
   user      User    @relation(fields: [id_user], references: [id])
   menus Menu[]
-  order Order[]
+  meja Meja[]
 
   @@map("cafes")
 }
@@ -115,14 +115,11 @@ model Price {
 model Order {
   id Int @id @default(autoincrement())
   noOrder String @db.VarChar(100)
-  id_cafe Int @db.Int
-  meja Float @db.Float
-  id_customer Int @db.Int
+  id_meja Int @db.Int
   status  Status
   created_at DateTime  @default(now()) @db.DateTime(6)
   updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
-  cafe Cafe @relation(fields: [id_cafe], references: [id])
-  customer Customer @relation(fields: [id_customer], references: [id])
+  meja Meja @relation(fields: [id_meja], references: [id])
   detailOrder DetailOrder[]
   payment Payment[]
 
@@ -191,19 +188,28 @@ model HistoryLike {
   created_at DateTime  @default(now()) @db.DateTime(6)
   updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
   product Product @relation(fields: [id_product],references: [id])
-  customer Customer @relation(fields: [id_customer],references: [id])
 
   @@map("historyLikes")
 }
 
-model Customer {
+enum statusMeja {
+  available
+  cleaning
+  in_use
+  reserved
+  not_available
+}
+
+model Meja {
   id Int @id @default(autoincrement())
-  email String @db.VarChar(100)
+  noMeja String @db.VarChar(100)
+  statusMeja statusMeja
+  id_cafe Int @db.Int
   created_at DateTime  @default(now()) @db.DateTime(6)
   updated_at DateTime? @updatedAt @default(now()) @db.DateTime(6)
-  historyLikes HistoryLike[]
+  cafe Cafe @relation(fields: [id_cafe],references: [id])
   orders Order[]
 
-  @@map("customers")
+  @@map("mejas")
 }
 

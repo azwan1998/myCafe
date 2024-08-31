@@ -7,6 +7,7 @@ import menuController from "../controller/menu-controller.js";
 import productController from "../controller/product-controller.js";
 import typeController from "../controller/type-controller.js";
 import priceController from "../controller/price-controller.js";
+import mejaController from "../controller/meja-controller.js";
 
 const userRouter = new express.Router();
 userRouter.use(authenticateToken);
@@ -46,6 +47,12 @@ userRouter.patch('/api/types/update/:id', checkUserRole(["superadmin","admin"]),
 
 //PRICE API
 userRouter.post('/api/price/', checkUserRole(["superadmin","admin"]),priceController.addPrice);
+userRouter.patch('/api/price/update/:id', checkUserRole(["superadmin","admin"]),priceController.updatePrice);
+
+//MEJA API
+userRouter.post('/api/meja/', checkUserRole(["superadmin","admin"]),mejaController.addMeja);
+userRouter.patch('/api/meja/update/:id', checkUserRole(["superadmin","admin"]),mejaController.updateMeja);
+userRouter.get('/api/meja/', checkUserRole(["superadmin","admin"]),mejaController.getMeja);
 
 
 export {
